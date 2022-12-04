@@ -12,9 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "conseiljs": "file:../ConseilJS",
+    "tezoslendingplatform": "file:../TezosLendingPlatform/src/util/",
     "conseiljs-softsigner": "^5.0.4-1",
     "cross-fetch": "^3.1.5",
     "express": "^4.18.2",
+    "jsonpath-plus": "^7.2.0",
     "loglevel": "^1.8.0",
     "node-fetch": "^3.2.10"
   },
