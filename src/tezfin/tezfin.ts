@@ -71,7 +71,7 @@ export const confirmTransaction = async (server:string, opHash:string, startBloc
     });
 };
 
-export async function liquidate(details: FToken.LiquidateDetails, protocolAddresses: ProtocolAddresses, server: string, signer: cjs.Signer, keystore: cjs.KeyStore, gas: number = 800_000, freight: number = 20_000) {
+export async function Liquidate(details: FToken.LiquidateDetails, protocolAddresses: ProtocolAddresses, server: string, signer: cjs.Signer, keystore: cjs.KeyStore, gas: number = 800_000, freight: number = 20_000) {
     const head = await TezosNodeReader.getBlockHead(server)
     const opHash = await TezosLendingPlatform.Liquidate(details,protocolAddresses, server, signer, keystore, 0, gas, freight);
     await confirmTransaction(server,opHash,head.header.level);

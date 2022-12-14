@@ -1,5 +1,5 @@
 import { Comptroller, FToken, ProtocolAddresses } from "tezoslendingplatform";
-import { liquidate } from "../tezfin/tezfin";
+import { Liquidate } from "../tezfin/tezfin";
 import * as cjs from 'conseiljs';
 
 export type UserMarketData = {
@@ -80,7 +80,7 @@ export const runLiquidate: LiquidateCallback = async (config, userData, comptrol
             }
 
             console.log(`liquidating user ${user.address} for asset ${config.liquidatingAsset}, amount = ${parseInt(repayAmount.toString())} seizing collateral ${maxSupplyAsset}`)
-            await liquidate({ amount: parseInt(repayAmount.toString()), borrower: user.address, seizeCollateral: maxSupplyAsset, supplyCollateral: config.liquidatingAsset }, protocolAddresses, config.server, signer, keyStore)
+            await Liquidate({ amount: parseInt(repayAmount.toString()), borrower: user.address, seizeCollateral: maxSupplyAsset, supplyCollateral: config.liquidatingAsset }, protocolAddresses, config.server, signer, keyStore)
             console.log(`liquidated user ${user.address} for asset ${config.liquidatingAsset}, amount = ${parseInt(repayAmount.toString())} seizing collateral ${maxSupplyAsset}`)
         } catch (e) {
             console.log(`failed to liquidate user ${user.address} `, e)
