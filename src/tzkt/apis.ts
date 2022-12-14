@@ -1,9 +1,10 @@
 import fetch from 'cross-fetch';
+import { FToken } from 'tezoslendingplatform';
 
-export const FetchUsers = async (bigMapIds: number[], network: string): Promise<Set<string>> => {
+export const FetchUsers = async (allMarkets: FToken.Storage[], network: string): Promise<Set<string>> => {
     const users = new Set<string>();
-    for (const id of bigMapIds) {
-        const response = await fetch(`https://api.${network}.tzkt.io/v1/bigmaps/${id}/keys?active=true&limit=10000`);
+    for (const id of allMarkets) {
+        const response = await fetch(`https://api.${network}.tzkt.io/v1/bigmaps/${id.balancesMapId}/keys?active=true&limit=10000`);
         const data = await response.json() as any;
         data.forEach((item: any) => {
             users.add(item.key)
@@ -13,7 +14,7 @@ export const FetchUsers = async (bigMapIds: number[], network: string): Promise<
 }
 
 
-type MarketData = {
+export type MarketData = {
     address: string;
     price: bigint;
     updateLevel: string;

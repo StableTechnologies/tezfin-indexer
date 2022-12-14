@@ -1,4 +1,7 @@
 import * as cjs from 'conseiljs';
+import { TezosNodeReader } from 'conseiljs';
+import { TezosLendingPlatform, FToken, ProtocolAddresses } from 'tezoslendingplatform';
+
 
 export const GetPrices = async(ctokenAddresses:any, oracle:string, server:string)=>{
     const head = await cjs.TezosNodeReader.getBlockHead(server);
@@ -67,3 +70,21 @@ export const confirmTransaction = async (server:string, opHash:string, startBloc
         throw new Error('operation status not applied');
     });
 };
+
+export async function Liquidate(details: FToken.LiquidateDetails, protocolAddresses: ProtocolAddresses, server: string, signer: cjs.Signer, keystore: cjs.KeyStore, gas: number = 800_000, freight: number = 20_000) {
+    const head = await TezosNodeReader.getBlockHead(server)
+    const opHash = await TezosLendingPlatform.Liquidate(details,protocolAddresses, server, signer, keystore, 0, gas, freight);
+    await confirmTransaction(server,opHash,head.header.level);
+}
+
+export async function GetMarkets(protocolAddresses: ProtocolAddresses, server: string): Promise<Record<string,FToken.Storage>> {
+    // get storage for all contracts
+    let markets:Record<string,FToken.Storage> = {};
+    await Promise.all(Object.keys(protocolAddresses.fTokens).map(async (asset) => {
+        const fTokenAddress = protocolAddresses.fTokens[asset];
+        const fTokenType = protocolAddresses.underlying[protocolAddresses.fTokensReverse[fTokenAddress]].tokenStandard;
+            const fTokenStorage: FToken.Storage = await FToken.GetStorage(fTokenAddress, protocolAddresses.underlying[protocolAddresses.fTokensReverse[fTokenAddress]], server, fTokenType);
+            markets[asset as string] = fTokenStorage
+    }));
+    return markets;
+}

@@ -1,10 +1,6 @@
 {
     "server": "https://rpc.ghostnet.teztnets.xyz/",
     "network": "ghostnet",
-    "ctokenMapIds": [155897,155903, 155899, 155901, 167530, 167532],
-    "comptroller": "KT1AHeE4ccwhUYv8cCoZcLH3Qb1NncbjT5du",
-    "comptrollerMarketMapId" : 155895,
-    "comptrollerCollateralMapId" : 155893,
-    "oracle":"KT1JruaZp25yuKgn2DGTnCMbRoU3CaZ4M11m",
-    "pollIntervalInseconds" : 300
+    "pollIntervalInseconds" : 300,
+    "liquidatingAsset": "ETH"
 }
