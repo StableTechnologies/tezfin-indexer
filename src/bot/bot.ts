@@ -23,13 +23,14 @@ export type LiquidateCallback = (config: any, userData: UserData[], comptrollerS
 
 
 export const runLiquidate: LiquidateCallback = async (config, userData, comptrollerStorage, protocolAddresses, signer, keyStore) => {
+    if (config.liquidatingAsset == undefined || config.liquidatingAsset == "") {
+        return
+    }
     const expScale = BigInt(comptrollerStorage.expScale.toString())
-    console.log("here")
     for (let user of userData) {
         try {
             // if no loan in required asset skip user
             if (user.marketData[config.liquidatingAsset].borrowBalance <= 0) {
-                console.log("here1", user.marketData,config.liquidatingAsset, user.marketData[config.liquidatingAsset])
                 continue;
             }
 
