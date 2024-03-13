@@ -21,7 +21,7 @@ export const StartIndexer = async (config: any, protocolAddresses: ProtocolAddre
                 const expScale = BigInt(comptrollerStorage.expScale.toString())
                 const startTime = performance.now();
                 const collaterals = await GetAllUserCollaterals(comptrollerStorage.collateralsMapId, config.network)
-                const accrualBlock = comptrollerStorage.markets["BTC"].updateLevel.toString()
+                const accrualBlock = comptrollerStorage.markets["USD"].updateLevel.toString()
                 console.log(`calculating liquidity for ${users.length} users`)
                 for (const user of users) {
                     let userData: Record<string, UserMarketData> = {};
